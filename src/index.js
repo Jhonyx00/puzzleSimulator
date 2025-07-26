@@ -81,14 +81,14 @@ let defaultPuzzleConfig = {
 /**
  * @property {object} globalState - Manages the global application state, including user interaction flags and data.
  * @property {boolean} globalState.canRotate - Indicates if the puzzle viewer is allowed to rotate (e.g., false during menu interactions).
- * @property {boolean} globalState.isDragging - Indicates if the puzzle is currently being dragged by the mouse.
+ * @property {boolean} globalState.isDragging - Indicates if the puzzle is currently being dragged by the mouse or touch.
  * @property {object} globalState.puzzleData - Contains data related to the puzzle structure or properties.
- * @property {object} globalState.mouseDown - Stores the X and Y coordinates of the mouse when the mouse button is pressed down.
- * @property {object} globalState.mouseMove - Stores the current X and Y coordinates of the mouse during movement.
- * @property {number} globalState.mouseDown.x - X-coordinate of the mouse down event.
- * @property {number} globalState.mouseDown.y - Y-coordinate of the mouse down event.
- * @property {number} globalState.mouseMove.x - Current X-coordinate of the mouse.
- * @property {number} globalState.mouseMove.y - Current Y-coordinate of the mouse.
+ * @property {object} globalState.dragStart - Stores the X and Y coordinates of the pointer (mouse or touch) when a drag interaction begins.
+ * @property {object} globalState.dragMove - Stores the current X and Y coordinates of the pointer (mouse or touch) during movement.
+ * @property {number} globalState.dragStart.x - X-coordinate of the pointer (mouse or touch) when a drag interaction begins.
+ * @property {number} globalState.dragStart.y - Y-coordinate of the mouse or (mouse or touch) when a drag interaction begins.
+ * @property {number} globalState.dragMove.x - Current X-coordinate of the mouse or touch.
+ * @property {number} globalState.dragMove.y - Current Y-coordinate of the mouse or touch.
  * @property {boolean} globalState.isKeyPressed - Indicates if any key is currently pressed down.
  * @property {boolean} globalState.isShiftPressed - Indicates if the Shift key is currently pressed.
  * @property {boolean} globalState.isOpacityEnabled - Flag indicating if Opacity settings are enabled.
@@ -96,11 +96,11 @@ let defaultPuzzleConfig = {
  */
 
 let globalState = {
-    canRotate: false, // Determines if the puzzle can be rotated via mouse interaction.
+    canRotate: false, // Determines if the puzzle can be rotated via mouse or touch interaction.
     isDragging: false,  // Indicates if the user is currently dragging the puzzle for rotation.
     puzzleData: PUZZLE_DATA, // Data structure defining the puzzle (e.g., dimensions, piece layout).
-    mouseDown: { x: 0, y: 0 }, // Stores the coordinates where the mouse click began.
-    mouseMove: { x: 0, y: 0 }, // Stores the current mouse coordinates during movement.
+    dragStart: { x: 0, y: 0 }, // Stores the coordinates where the pointer (mouse or touch) began.
+    dragMove: { x: 0, y: 0 }, // Stores the current mouse or touch coordinates during movement.
     isKeyPressed: false, // Tracks if a keyboard key is pressed to prevent rapid input.
     isShiftPressed: false, // Tracks the state of the Shift key for modified inputs (e.g., inverse moves).
     isOpacityEnabled: true, // Controls the availability of Opacity settings.
@@ -128,18 +128,18 @@ const baseOpacitySelector = new RangeInput("Base Opacity", { min: 0, max: 1, ste
  * 
  * @param {Event} e - The mouse event object. 
  */
-const handleSceneMouseDown = (e) => {
-    updateGlobalState({ isDragging: true });
-    updateGlobalState({ mouseDown: { x: e.clientX, y: e.clientY } });
+const handleSceneDragStart = (e) => {
+    const { x, y } = getEventPosition(e);
+    updateGlobalState({ isDragging: true, dragStart: { x: x, y: y } });
 }
 
 /**
- * Handles the global mousedown event, which initiates interactions such as menu operations and preparing for puzzle dragging||rotation.
- * It identifies the clicked element, performs asociated menu actions.
+ * Handles the document mouse or touch event, which initiates interactions such as menu operations and preparing for puzzle dragging|rotation.
+ * It identifies the selected element and performs asociated menu actions.
  * 
- * @param {Event} e - The mouse event object. 
+ * @param {Event} e - The mouse or touch event object. 
  */
-const handleGlobalMouseDown = (e) => {
+const handleDocumentDragStart = (e) => {
     const element = e.target;
     performMenuOps(element);
 
@@ -149,12 +149,12 @@ const handleGlobalMouseDown = (e) => {
 }
 
 /**
- * Handles the global mouseup event, to stop puzzle rotation.
+ * Handles the document pointer (mouse or touch) event, to stop puzzle rotation.
  * If the puzzle was being dragged, it updates the puzzle's config with the final angle and resets the dragging state.
  * It re-enables the ability to rotate the puzzle.
  * 
  */
-const handleGlobalMouseUp = () => {
+const handleDocumentDragEnd = () => {
     if (globalState.isDragging) {
         updatePuzzleConfig({ angle: puzzleViewer.angle });
         updateGlobalState({ isDragging: false });
@@ -254,21 +254,19 @@ const handleKeyUp = (e) => {
 }
 
 /**
- * Handles global mouse move event, primarily for rotating the puzzle viewer.
- * It updates the global state with the current mouse position and if dragging, calculates the mouse delta to perform a visual rotation. 
+ * Handles document mouse or touch move event, primarily for rotating the puzzle viewer.
+ * It updates the global state with the current pointer position and if dragging, calculates the pointer delta to perform a visual rotation. 
  * 
- * @param {Event} e - The mouse event object. 
+ * @param {Event} e - The mouse or touch event object. 
  */
-const handleGlobalMouseMove = (e) => {
-    updateGlobalState({ mouseMove: { x: e.clientX, y: e.clientY } })
+const handleDocumentDragMove = (e) => {
+    const { x, y } = getEventPosition(e);
     if (!globalState.isDragging) return;
     // if (!globalState.canRotate) return;
-    requestAnimationFrame(() => {
-        const currentMouse = { x: e.clientX, y: e.clientY };
-        const mouseDelta = getMouseDelta(currentMouse, globalState.mouseDown);
-        puzzleViewer.performRotation(mouseDelta, puzzle.isFliped);
-        updateGlobalState({ mouseDown: currentMouse });
-    });
+    const currentMouse = { x: x, y: y };
+    const mouseDelta = getDragDelta(currentMouse, globalState.dragStart);
+    puzzleViewer.performRotation(mouseDelta, puzzle.isFliped);
+    updateGlobalState({ dragStart: currentMouse });
 }
 
 /**
@@ -683,9 +681,14 @@ speedSelector.element.addEventListener("change", handleSpeedChange);
 baseOpacitySelector.element.addEventListener("input", handleBaseOpacityChange);
 
 /**
- * Handles global state attributes.
+ * Attaches event listeners to the "Scene" element for both mouse and touch input.
+ * 
+ * When a mouse button is pressed down or a touch interaction beggins on the "scene", 
+ * the "handleSceneDragStart" function will be triggered.
+ * 
  */
-scene.addEventListener("mousedown", handleSceneMouseDown);
+scene.addEventListener("mousedown", handleSceneDragStart);
+scene.addEventListener("touchstart", handleSceneDragStart, { passive: true });
 
 // ----
 // Global Drag Interaction Handlers.
@@ -693,22 +696,25 @@ scene.addEventListener("mousedown", handleSceneMouseDown);
 // ----
 
 /**
- * Starts tracking when the mouse is being pressed down.
+ * Attaches event listeners for both mouse movement and touch movement.
  * 
  */
-document.addEventListener("mousedown", handleGlobalMouseDown);
+document.addEventListener("mousedown", handleDocumentDragStart);
+document.addEventListener("touchstart", handleDocumentDragStart);
 
 /**
- * Starts tracking when the mouse is being moved.
+ * Attaches event listeners for both mouse movement and touch movement.
  * 
  */
-document.addEventListener("mousemove", handleGlobalMouseMove);
+document.addEventListener("mousemove", handleDocumentDragMove);
+document.addEventListener("touchmove", handleDocumentDragMove);
 
 /**
- * Starts tracking when the mouse is up.
+ * Attaches event listeners to the entire document for handling the conclusion of mouse or touch interactions.
  * 
  */
-document.addEventListener("mouseup", handleGlobalMouseUp);
+document.addEventListener("mouseup", handleDocumentDragEnd);
+document.addEventListener("touchend", handleDocumentDragEnd);
 
 /**
  * Handles global scroll (wheel) and uses "e.preventDefault()" to override default page behavior.
