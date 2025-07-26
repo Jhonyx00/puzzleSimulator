@@ -408,7 +408,7 @@ class Puzzle {
                 if (this.#skin === PUZZLE_SKIN_NAMES.HOLLOW) {
                     auxLayerPiece.setImgOnAllFaces(SPECIAL_SKIN.HOLLOW);
                 }
-                else if (this.#skin === PUZZLE_SKIN_NAMES.TRANSLUCENT) {
+                else if (this.#skin === PUZZLE_SKIN_NAMES.GLASS) {
                     auxLayerPiece.setImgOnAllFaces(SPECIAL_SKIN.CRISTAL);
                 }
                 else {
@@ -569,20 +569,22 @@ class Puzzle {
         this.baseColor = puzzleConfig.baseColor;
 
         for (const [pieceId, element] of Object.entries(puzzleData)) {
-            const dimension = element.dimension;
-            const transform = element.transform;
-            const cubePiece = new Box3D(dimension);
-            cubePiece.setPosition(transform);
-            cubePiece.setPieceId(pieceId);
+            if (pieceId != 13) {
+                const dimension = element.dimension;
+                const transform = element.transform;
+                const cubePiece = new Box3D(dimension);
+                cubePiece.setPosition(transform);
+                cubePiece.setPieceId(pieceId);
 
-            if (puzzleConfig.skin === PUZZLE_SKIN_NAMES.HOLLOW) {
-                cubePiece.setBgOnAllFaces(SPECIAL_SKIN.HOLLOW, puzzleConfig.baseColor);
+                if (puzzleConfig.skin === PUZZLE_SKIN_NAMES.HOLLOW) {
+                    cubePiece.setBgOnAllFaces(SPECIAL_SKIN.HOLLOW, puzzleConfig.baseColor);
+                }
+
+                const faceColors = this.getFaceColors(pieceId, puzzleState, puzzleConfig.skin);
+                cubePiece.setBackground(faceColors);
+                cubePiece.insertTo(puzzleContainer.element);
+                this.initPiece(pieceId, cubePiece);
             }
-
-            const faceColors = this.getFaceColors(pieceId, puzzleState, puzzleConfig.skin);
-            cubePiece.setBackground(faceColors);
-            cubePiece.insertTo(puzzleContainer.element);
-            this.initPiece(pieceId, cubePiece);
         }
         this.applyBaseColorToAllPieces(puzzleConfig.baseColor);
     }
