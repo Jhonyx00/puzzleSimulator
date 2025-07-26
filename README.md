@@ -5,7 +5,7 @@ This simulator lets you freely explore, scramble and solve a virtual cube with i
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ae6e22f2-9646-4e32-a331-013779563238" />
 
-<img width="459" height="324" alt="responsivede_design" src="https://github.com/user-attachments/assets/c8d72b4b-333a-4ac4-ad39-176da9e64095" />
+<img width="759" height="624" alt="responsivede_design" src="https://github.com/user-attachments/assets/50c9da8f-b9b1-47cc-a4b1-5c11f9468927" />
 
 ## Features
 
