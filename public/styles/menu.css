@@ -1,13 +1,12 @@
 .menu {
-    font-size: 0.96em;
     overflow: auto;
     display: flex;
     flex-direction: column;
-    transition: transform 500ms ease;
-    background-color: whitesmoke;
+    transition: transform 400ms ease;
 
     .close-btn-container {
-        background-color: whitesmoke;
+        background-color: rgba(245, 245, 245, 0.7);
+        backdrop-filter: blur(2em);
         z-index: 1;
         inset: 0;
         padding: 0.5em;
@@ -24,7 +23,6 @@
     }
 
     .content {
-        padding: 1.5em;
         display: flex;
         flex-direction: column;
         gap: 1.5em;
@@ -35,20 +33,14 @@
             font-weight: bold;
         }
 
-        .puzzle-visual-customization {
-            display: flex;
-            flex-direction: column;
-            gap: 1em;
-            background-color: white;
-            padding: 1em;
-        }
-
+        .puzzle-visual-customization,
         .puzzle-settings {
             display: flex;
             flex-direction: column;
             gap: 1em;
-            background-color: white;
             padding: 1em;
+            background-color: white;
+            overflow: auto;
         }
 
         .controls {
