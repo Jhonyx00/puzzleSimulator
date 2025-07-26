@@ -1,0 +1,94 @@
+.menu {
+    font-size: 0.96em;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    transition: transform 500ms ease;
+    background-color: whitesmoke;
+
+    .close-btn-container {
+        background-color: whitesmoke;
+        z-index: 1;
+        inset: 0;
+        padding: 0.5em;
+        display: flex;
+        position: sticky;
+        justify-content: flex-end;
+
+        .btn {
+            border: none;
+            width: 2em;
+            height: 2em;
+            cursor: pointer;
+        }
+    }
+
+    .content {
+        padding: 1.5em;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;
+
+        .container-span {
+            height: 100%;
+            padding: 0.4em 0;
+            font-weight: bold;
+        }
+
+        .puzzle-visual-customization {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            background-color: white;
+            padding: 1em;
+        }
+
+        .puzzle-settings {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            background-color: white;
+            padding: 1em;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            color: gray;
+
+            .input-container {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .controls-label {
+                padding-bottom: 0.5em;
+            }
+
+            span.controls-indicator {
+                font-weight: bold;
+            }
+        }
+    }
+
+    input[type="range"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 100%;
+        cursor: pointer;
+        /* overflow: hidden; */
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        appearance: none;
+        -webkit-appearance: none;
+        background-color: #0059de;
+        width: 1.2em;
+        height: 1.2em;
+        /* box-shadow: -30em 0 0 30em #0059de; */
+    }
+}

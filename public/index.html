@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Puzzle Simulator</title>
+
+    <!-- icons -->
+    <link rel="icon" href="./images/icons/favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="./images/icons/favicon.png" type="image/png">
+
+    <!-- styles -->
+    <link rel="stylesheet" href="../public/styles/global.css">
+    <link rel="stylesheet" href="../public/styles/main.css">
+    <link rel="stylesheet" href="../public/styles/element-3d.css">
+    <link rel="stylesheet" href="../public/styles/menu.css">
+    <link rel="stylesheet" href="../public/styles/dialog.css">
+    <link rel="stylesheet" href="../public/styles/dropdown.css">
+    <link rel="stylesheet" href="../public/styles/responsive.css">
+
+    <!-- utils -->
+    <script src="../src/utils/angleUtils.js"></script>
+    <script src="../src/utils/matrixUtils.js"></script>
+    <script src="../src/utils/pointerUtils.js"></script>
+    <script src="../src/utils/conversionUtils.js"></script>
+    <script src="../src/utils/objectTransformationUtils.js"></script>
+
+    <!-- config -->
+    <script src="../src/config/skins.js"></script>
+    <script src="../src/config/constants.js"></script>
+    <script src="../src/config/storageKeys.js"></script>
+
+    <!-- data -->
+    <script src="../src/data/rotatedNotation.js"></script>
+    <script src="../src/data/pieceFaceColorMap.js"></script>
+
+    <!-- core -->
+    <script src="../src/core/Box3D.js"></script>
+    <script src="../src/core/Puzzle.js"></script>
+    <script src="../src/core/BoxGroup.js"></script>
+    <script src="../src/core/Dropdown.js"></script>
+    <script src="../src/core/PuzzleViewer.js"></script>
+    <script src="../src/core/puzzleFactory.js"></script>
+    <script src="../src/core/layerFactory.js"></script>
+    <script src="../src/core/RangeInput.js"></script>
+</head>
+
+<body>
+    <aside class="menu" id="menu">
+        <div class="close-btn-container">
+            <button class="btn" id="close-menu-btn"><img src="./images/icons/close.svg" alt=""></button>
+        </div>
+        <div class="content" id="content">
+            <div class="puzzle-visual-customization" id="puzzle-visual-customization">
+                <span class="container-span">Visual Customization</span>
+            </div>
+            <div class="puzzle-settings" id="puzzle-settings">
+                <span class="container-span">Settings</span>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main">
+        <div class="main-btn-container">
+            <button class="btn menu-btn" id="open-sidebar-btn"><img src="./images/icons/menu.svg" alt=""></button>
+            <p class="move-count">Moves:&nbsp;<span id="move-count">0</span></p>
+            <button id="open-dialog-btn" class="btn info-btn" tabindex="-1">
+                <img src="./images/icons/dialog.svg" alt="">
+            </button>
+        </div>
+
+        <!-- Main container where the 3D Puzzle is rendered -->
+        <div class="scene" id="scene"></div>
+
+        <dialog id="info-dialog" tabindex="-1">
+            <button id="close-dialog-btn" class="close-btn"><img src="./images/icons/close.svg" alt=""></button>
+            <div class="content">
+                <span class="title">Possible Puzzle Moves</span>
+                <p>To make a move or flip the puzzle, simply press <b>one key at a time</b> from the list below on your
+                    keyboard:</p>
+                <div class="list-container">
+                    <ul class="move-list cw-list">
+                        <li>
+                            F
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">F</kbd>
+                        </li>
+                        <li>
+                            R
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">R</kbd>
+                        </li>
+                        <li>
+                            L
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">L</kbd>
+                        </li>
+                        <li>
+                            U
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">U</kbd>
+                        </li>
+                        <li>
+                            D
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">D</kbd>
+                        </li>
+                        <li>
+                            B
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">B</kbd>
+                        </li>
+                        <li>
+                            M
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">M</kbd>
+                        </li>
+                        <li>
+                            E
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">E</kbd>
+                        </li>
+                        <li>
+                            S
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">S</kbd>
+                        </li>
+
+                    </ul>
+                    <ul class="move-list ccw-list">
+                        <li>
+                            F'
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">Shift</kbd>
+                            <img src="../public/images/icons/plus.svg" alt="">
+                            <kbd class="key">F</kbd>
+                        </li>
+                        <li>R'
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">Shift</kbd>
+                            <img src="../public/images/icons/plus.svg" alt="">
+                            <kbd class="key">R</kbd>
+                        </li>
+                        <li>L'
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">Shift</kbd>
+                            <img src="../public/images/icons/plus.svg" alt="">
+                            <kbd class="key">L</kbd>
+                        </li>
+                        <li>U'
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">Shift</kbd>
+                            <img src="../public/images/icons/plus.svg" alt="">
+                            <kbd class="key">U</kbd>
+                        </li>
+                        <li>D'
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">Shift</kbd>
+                            <img src="../public/images/icons/plus.svg" alt="">
+                            <kbd class="key">D</kbd>
+                        </li>
+                        <li>B'
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">Shift</kbd>
+                            <img src="../public/images/icons/plus.svg" alt="">
+                            <kbd class="key">B</kbd>
+                        </li>
+                        <li>M'
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">Shift</kbd>
+                            <img src="../public/images/icons/plus.svg" alt="">
+                            <kbd class="key">M</kbd>
+                        </li>
+                        <li>E'
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">Shift</kbd>
+                            <img src="../public/images/icons/plus.svg" alt="">
+                            <kbd class="key">E</kbd>
+                        </li>
+                        <li>S'
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">Shift</kbd>
+                            <img src="../public/images/icons/plus.svg" alt="">
+                            <kbd class="key">S</kbd>
+                        </li>
+                    </ul>
+                    <ul class="move-list flip-list">
+                        <li>Flip Left
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">Arrow Left</kbd>
+                        </li>
+                        <li>Flip Right
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">Arrow Right</kbd>
+                        </li>
+                        <li>Flip vertical
+                            <img src="./images/icons/flip-horizontal-right.svg" alt="">
+                            <kbd class="key">Arrow Up/Down</kbd>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </dialog>
+
+        <div class="action-buttons" id="action-buttons">
+            <div class="state-btn-container" id="reset-scramble-btn-container">
+                <button class="reset-btn btn action-btn" id="reset-btn">Reset</button>
+                <button class="scramble-btn btn action-btn" id="scramble-btn">Scramble</button>
+            </div>
+
+            <div class="rotate-btn-container">
+                <button data-notation="FLIP_V" tabindex="-1"><img src="./images/icons/flip-vertical.svg"
+                        alt="flip-vertical"></button>
+                <button data-notation="FLIP_H_L" tabindex="-1"><img src="./images/icons/flip-horizontal-left.svg"
+                        alt="flip-horizontal-left"></button>
+                <button data-notation="FLIP_H_R" tabindex="-1"><img src="./images/icons/flip-horizontal-right.svg"
+                        alt="flip-horizontal-right"></button>
+            </div>
+        </div>
+    </main>
+    <!-- index -->
+    <script src="../src/index.js"></script>
+    <!-- layerRotations -->
+    <script src="../src/data/layerRotations.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+dialog {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(2em);
+    box-shadow: 0em 0em 0.2em 0em lightgray;
+    border: none;
+    margin: auto;
+    width: clamp(10em, 50em, 50em);
+    height: max-content;
+    padding: 1em;
+
+    button.close-btn {
+        width: 2em;
+        height: 2em;
+        padding: 1em;
+        margin-left: calc(100% - 2em);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+
+        img {
+            pointer-events: none;
+            width: inherit;
+            height: inherit;
+        }
+    }
+
+    div.content {
+        padding: 1em;
+
+        span.title {
+            font-size: 1.8em;
+            display: block;
+            padding: 0.4em 0;
+        }
+
+        p {
+            padding: 1em 0;
+        }
+
+        div.list-container {
+            display: flex;
+            flex-wrap: wrap;
+            overflow: auto;
+            justify-content: space-evenly;
+            gap: 1em;
+
+            ul.move-list {
+                list-style: none;
+
+                .key {
+                    background-color: #eee;
+                    border: 1px solid #ccc;
+                    box-shadow: 0 0.064em 0 #ccc;
+                    padding: 0.2em 0.4em;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 0.2em;
+                    text-align: center;
+                }
+
+                li {
+                    display: grid;
+                    grid-template-rows: 2em;
+                    place-items: center;
+                    font-size: 4em;
+
+                    span {
+                        font-size: 0.9em;
+                    }
+
+                    img {
+                        width: 1.4em;
+                        height: 1.4em;
+                    }
+                }
+            }
+
+            .cw-list {
+                display: grid;
+                gap: 0.4em;
+
+                grid-template-rows: repeat(9, 2em);
+
+                li {
+                    grid-template-columns: 2em 2em 2em;
+                }
+            }
+
+            .ccw-list {
+                display: grid;
+                gap: 0.4em;
+                grid-template-rows: repeat(9, 2em);
+
+                li {
+                    grid-template-columns: 2em 2em 4em 2em 2em;
+                }
+            }
+
+            .flip-list {
+                display: grid;
+                place-items: center;
+                gap: 0.4em;
+                grid-template-rows: 2em 2em 2em;
+
+                li {
+                    grid-template-columns: 6em 2em 7.6em;
+                }
+            }
+        }
+    }
+}

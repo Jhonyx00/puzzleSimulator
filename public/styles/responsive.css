@@ -1,0 +1,123 @@
+@media (min-width: 0px) {
+    body {
+        grid-template-columns: 100%;
+
+        .main {
+            .main-btn-container {
+                .menu-btn {
+                    display: block;
+                }
+            }
+        }
+
+        dialog {
+            width: 98vw;
+            height: 98vh;
+
+            max-width: none;
+            max-height: none;
+
+            div.content {
+                padding-top: 0;
+                width: 100%;
+
+                span.title {
+                    font-size: 1.2em;
+                    padding: 0;
+                    padding: 1em 0 0 0;
+                }
+
+                div.list-container {
+                    gap: 0.5em;
+
+                    ul.move-list {
+                        li {
+                            font-size: 0.8em;
+                        }
+                    }
+                }
+            }
+        }
+
+        .menu {
+            position: absolute;
+            transform: translateX(-100%);
+            width: 100%;
+            inset: 0;
+            z-index: 2;
+        }
+
+        .menu.open {
+            transform: translateX(0%);
+        }
+    }
+}
+
+
+@media (min-width:650px) {
+    body {
+        grid-template-columns: 20em auto;
+        grid-template-rows: 100vh;
+
+        dialog {
+            width: max-content;
+            height: max-content;
+
+            max-width: none;
+            max-height: none;
+
+            div.content {
+                padding-top: 0;
+                width: 100%;
+
+                span.title {
+                    font-size: 1.2em;
+                    padding: 0;
+                    padding: 1em 0 0 0;
+                }
+
+                div.list-container {
+                    gap: 0.5em;
+
+                    ul.move-list {
+                        li {
+                            font-size: 1em;
+                        }
+                    }
+                }
+            }
+        }
+
+        .menu {
+            position: static;
+            transform: translateX(0%);
+
+            .close-btn-container {
+                padding: 0em;
+
+                .btn {
+                    display: none;
+                }
+            }
+        }
+
+        .menu.open {
+            display: flex;
+            transform: translateX(0%);
+        }
+
+        .main {
+            .main-btn-container {
+                .menu-btn {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 300px) {
+    body {
+        font-size: 0.8em;
+    }
+}
