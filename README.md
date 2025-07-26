@@ -5,7 +5,7 @@
 A simple and interactive 3x3 Cube simulator built with pure HTML, CSS and JavaScript -- no frameworks or libraries required.
 This simulator lets you freely explore, scramble and solve a virtual cube with intiutive controls an dustomizable appearance.
 
-# # Features
+## Features
 
 - Rotate the cube with mouse input
 - Smooth animations for layer rotations
@@ -14,7 +14,7 @@ This simulator lets you freely explore, scramble and solve a virtual cube with i
 - Adjustable cube size
 - Saves user preferences using localStorage (skin, base color, size, etc.)
 
-# # Usage
+## Usage
 
 - **Rotate the entire cube:** Click and drag anywhere on the white background to freely rotate the cube in 3D space.
 - **Rotate layers using keyboard:** Use the following keys to rotate specific layers of the cube:
@@ -37,7 +37,7 @@ This simulator lets you freely explore, scramble and solve a virtual cube with i
 - **Scramble the cube:**
   Click the **Scramble** button on the screeen to shuffle the cube ramdomly.
 
-# # Roadmap
+## Roadmap
 
 - [x] Basic cube simulation with 3D rotation
 - [x] Add support for keyboard controls 
@@ -45,17 +45,17 @@ This simulator lets you freely explore, scramble and solve a virtual cube with i
 - [ ] Add timer
 - [ ] 
 
-# # Technology Used
+## Technology Used
 
 - HTML
 - CSS
 - JavaScript
 
-# # Author
+## Author
 
 Jhonatan Reyes - [@Jhonyx00](https://github.com/Jhonyx00)
 
-# # License
+## License
 
 This project is licensed under the Creative Commons Attribution-NonComercial 4.0 International License.
 See the [LICENSE](LICENSE) file for details.
