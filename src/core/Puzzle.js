@@ -269,8 +269,8 @@ class Puzzle {
      * @param {Object} param0.layer - Affected layer.
      */
     rotateLayer({ angle, axis, layer }) {
-        requestAnimationFrame(() => this.#TRANSFORMATION_BY_AXIS[axis](angle));
         this.#auxLayer.show();
+        requestAnimationFrame(() => this.#TRANSFORMATION_BY_AXIS[axis](angle));
         requestAnimationFrame(() => {
             setTimeout(() => {
                 this.isRotating = false;
@@ -278,7 +278,7 @@ class Puzzle {
                 this.#auxLayer.resetRotation();
                 for (const key of layer) {
                     const piece = this.#pieces.get(key);
-                    piece?.show();
+                    piece.show();
                 }
             }, this.#transitionDuration);
             this.isRotating = true;
@@ -291,7 +291,6 @@ class Puzzle {
      * 
      */
     initAuxLayerCubePiece(arrayIndex) {
-        if (arrayIndex === 13) return;
         const element = this.#pieces.get(arrayIndex);
         const { position, dimension } = element;
         const puzzlePiece = new Box3D(dimension);
@@ -400,25 +399,24 @@ class Puzzle {
             const auxLayerPiece = this.#auxLayerMap.get(key);
             const puzzlePiece = this.#pieces.get(key);
 
-            if (key !== 13) { // "13" invisible pieces (core).
-                const faceColor = {};
-                const rotatedColors = this.getRotatedColors(currentColors, targetColors, notation);
-                puzzlePiece.setBackground(rotatedColors);
+            const faceColor = {};
+            const rotatedColors = this.getRotatedColors(currentColors, targetColors, notation);
+            puzzlePiece.setBackground(rotatedColors);
 
-                if (this.#skin === PUZZLE_SKIN_NAMES.HOLLOW) {
-                    auxLayerPiece.setImgOnAllFaces(SPECIAL_SKIN.HOLLOW);
-                }
-                else if (this.#skin === PUZZLE_SKIN_NAMES.GLASS) {
-                    auxLayerPiece.setImgOnAllFaces(SPECIAL_SKIN.CRISTAL);
-                }
-                else {
-                    auxLayerPiece.setBaseColor(this.baseColor);
-                }
-                auxLayerPiece.setBackground(currentLayerColors[key]); // sets the colors of each piece in the layer that is being rotated.
-                puzzlePiece.hide();
-                Object.entries(rotatedColors).forEach(([key, value]) => faceColor[key] = value.id);
-                this.updateState(key, faceColor);
+            if (this.#skin === PUZZLE_SKIN_NAMES.HOLLOW) {
+                auxLayerPiece.setImgOnAllFaces(SPECIAL_SKIN.HOLLOW);
             }
+            else if (this.#skin === PUZZLE_SKIN_NAMES.GLASS) {
+                auxLayerPiece.setImgOnAllFaces(SPECIAL_SKIN.CRISTAL);
+            }
+            else {
+                auxLayerPiece.setBaseColor(this.baseColor);
+            }
+
+            auxLayerPiece.setBackground(currentLayerColors[key]); // sets the colors of each piece in the layer that is being rotated.
+            puzzlePiece.hide();
+            Object.entries(rotatedColors).forEach(([key, value]) => faceColor[key] = value.id);
+            this.updateState(key, faceColor);
         });
     }
 
@@ -569,22 +567,20 @@ class Puzzle {
         this.baseColor = puzzleConfig.baseColor;
 
         for (const [pieceId, element] of Object.entries(puzzleData)) {
-            if (pieceId != 13) {
-                const dimension = element.dimension;
-                const transform = element.transform;
-                const cubePiece = new Box3D(dimension);
-                cubePiece.setPosition(transform);
-                cubePiece.setPieceId(pieceId);
+            const dimension = element.dimension;
+            const transform = element.transform;
+            const cubePiece = new Box3D(dimension);
+            cubePiece.setPosition(transform);
+            cubePiece.setPieceId(pieceId);
 
-                if (puzzleConfig.skin === PUZZLE_SKIN_NAMES.HOLLOW) {
-                    cubePiece.setBgOnAllFaces(SPECIAL_SKIN.HOLLOW, puzzleConfig.baseColor);
-                }
-
-                const faceColors = this.getFaceColors(pieceId, puzzleState, puzzleConfig.skin);
-                cubePiece.setBackground(faceColors);
-                cubePiece.insertTo(puzzleContainer.element);
-                this.initPiece(pieceId, cubePiece);
+            if (puzzleConfig.skin === PUZZLE_SKIN_NAMES.HOLLOW) {
+                cubePiece.setBgOnAllFaces(SPECIAL_SKIN.HOLLOW, puzzleConfig.baseColor);
             }
+
+            const faceColors = this.getFaceColors(pieceId, puzzleState, puzzleConfig.skin);
+            cubePiece.setBackground(faceColors);
+            cubePiece.insertTo(puzzleContainer.element);
+            this.initPiece(pieceId, cubePiece);
         }
         this.applyBaseColorToAllPieces(puzzleConfig.baseColor);
     }
