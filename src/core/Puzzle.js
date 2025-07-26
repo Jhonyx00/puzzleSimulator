@@ -576,7 +576,7 @@ class Puzzle {
             cubePiece.setPieceId(pieceId);
 
             if (puzzleConfig.skin === PUZZLE_SKIN_NAMES.HOLLOW) {
-                cubePiece.setBgOnAllFaces(SPECIAL_SKIN.HOLLOW);
+                cubePiece.setBgOnAllFaces(SPECIAL_SKIN.HOLLOW, puzzleConfig.baseColor);
             }
 
             const faceColors = this.getFaceColors(pieceId, puzzleState, puzzleConfig.skin);

@@ -340,6 +340,8 @@ class Box3D {
      * @param {object} color - The color object: ({r, g, b, a}).
      */
     setBgOnAllFaces(bg, color) {
+        console.log(color);
+
         this.#faces.forEach(face => {
             face.style.backgroundImage = bg;
             face.style.backgroundColor = `rgba(${color.r},${color.g},${color.b},${color.a})`;
