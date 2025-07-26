@@ -1,7 +1,7 @@
 ﻿# puzzleSimulator
 
 A simple and interactive 3x3 Cube simulator built with pure HTML, CSS and JavaScript -- no frameworks or libraries required.
-This simulator lets you freely explore, scramble and solve a virtual cube with intiutive controls an dustomizable appearance.
+This simulator lets you freely explore, scramble and solve a virtual cube with intiutive controls an customizable appearance.
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ae6e22f2-9646-4e32-a331-013779563238" />
 
