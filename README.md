@@ -8,7 +8,7 @@ This simulator lets you freely explore, scramble and solve a virtual cube with i
 
 <img width="690" height="579" alt="Screenshot 2025-07-26 155238" src="https://github.com/user-attachments/assets/de6be3a5-270f-4dab-bed4-5f7fdc0f4008" />
 
-<img width="759" height="624" alt="responsivede_design" src="https://github.com/user-attachments/assets/50c9da8f-b9b1-47cc-a4b1-5c11f9468927" />
+<img width="259" height="124" alt="responsivede_design" src="https://github.com/user-attachments/assets/50c9da8f-b9b1-47cc-a4b1-5c11f9468927" />
 
 ## Features
 
