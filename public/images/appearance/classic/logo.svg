@@ -1,14 +1,5 @@
 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-        <filter id="shadow">
-            <feDropShadow 
-                dx="0" 
-                dy="0" 
-                stdDeviation="0.5" 
-                flood-color="gray" 
-            />
-        </filter>
-    </defs>
+   
     <rect 
         x="5" 
         y="5" 
@@ -19,9 +10,7 @@
         stroke="white" 
         stroke-width="0.1"
     />
-    <g 
-        transform="translate(20.9484,37.36825)"
-        filter="url(#shadow)">
+    <g transform="translate(20.9484,37.36825)">
         <path 
             d="M9.84297 25.42
                 C8.10964 25.42 6.52297 25.1267 5.08297 24.54

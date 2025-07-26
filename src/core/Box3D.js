@@ -78,7 +78,6 @@ class Box3D {
 
         this.#setElementStyle(this.#element, { width: `${this.#dimension.width}px`, height: `${this.#dimension.height}px` });
 
-
         /**
          * Defines the default properties for each of the six faces of the 3D box.
          * The keys correspond to specific faces:
