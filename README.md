@@ -43,7 +43,6 @@ This simulator lets you freely explore, scramble and solve a virtual cube with i
 - [x] Add support for keyboard controls 
 - [ ] Add touch interactions for mobile devices
 - [ ] Add timer
-- [ ] 
 
 ## Technology Used
 
