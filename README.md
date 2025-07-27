@@ -6,18 +6,18 @@ This simulator lets you freely explore, scramble and solve a virtual cube with i
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ae6e22f2-9646-4e32-a331-013779563238" />
 
-<img width="590" alt="Screenshot 2025-07-26 155238" src="https://github.com/user-attachments/assets/de6be3a5-270f-4dab-bed4-5f7fdc0f4008" />
+<img width="620" alt="Screenshot 2025-07-26 155238" src="https://github.com/user-attachments/assets/de6be3a5-270f-4dab-bed4-5f7fdc0f4008" />
 
-<img width="359" alt="responsivede_design" src="https://github.com/user-attachments/assets/50c9da8f-b9b1-47cc-a4b1-5c11f9468927" />
+<img width="369" alt="responsivede_design" src="https://github.com/user-attachments/assets/50c9da8f-b9b1-47cc-a4b1-5c11f9468927" />
 
 ## Features
 
-- Rotate the cube with mouse input
-- Smooth animations for layer rotations
-- Responsive design for desktop and mobile devices
-- Customizable cube skin and base color
 - Adjustable cube size
-- Saves user preferences using localStorage (skin, base color, size, etc.)
+- Smooth animations for layer rotations
+- Customizable cube skin and base color
+- Rotate the cube with touch or move input
+- Responsive design for desktop and mobile devices
+- Saves user preferences using localStorage (skin, base color, size, etc)
 
 ## Usage
 
